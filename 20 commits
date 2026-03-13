@@ -1,0 +1,9 @@
+git init
+git add .
+git commit -m "Initial commit"
+git commit -m "Added Question class"
+git commit -m "Created Flask routes"
+git commit -m "Added HTML templates"
+git commit -m "Implemented scoring system"
+git commit -m "Added datetime for submission time"
+git commit -m "Updated README file"
