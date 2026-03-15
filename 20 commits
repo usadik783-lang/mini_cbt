@@ -6,7 +6,7 @@ git commit -m "Created Flask routes"
 git commit -m "Added HTML templates"
 git commit -m "Implemented scoring system"
 git commit -m "Added datetime for submission time"
-git commit -m "Updated README file"
+git commit -m "Added comments to the code"
 git commit -m "Added README documentation
 git cummit -m "Implemented Question class using OOP
 git commit -m "Added sample CBT questions
