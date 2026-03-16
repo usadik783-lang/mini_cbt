@@ -1,0 +1,266 @@
+mini_cbt_project/
+│
+├── commit_01_initial_setup/
+│   └── app.py 
+│from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Mini CBT System"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+  
+├── commit_02_question_class/
+│   └── app.py
+│from flask import Flask
+
+app = Flask(__name__)
+
+class Question:
+    def __init__(self, question, options, answer):
+        self.question = question
+        self.options = options
+        self.answer = answer
+
+@app.route("/")
+def home():
+    return "Mini CBT System"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+  
+├── commit_03_check_answer_method/
+│   └── app.py
+│from flask import Flask
+
+app = Flask(__name__)
+
+class Question:
+    def __init__(self, question, options, answer):
+        self.question = question
+        self.options = options
+        self.answer = answer
+
+    def check_answer(self, user_answer):
+        return user_answer == self.answer
+      
+├── commit_04_stack_structure/
+│   └── app.py
+│attempt_stack = []
+
+def add_attempt(score):
+    attempt_stack.append(score)
+  
+├── commit_05_add_attempt_function/
+│   └── app.py
+│attempt_stack = []
+
+def add_attempt(score):
+    attempt_stack.append(score)
+
+def undo_last_attempt():
+    if attempt_stack:
+        return attempt_stack.pop()
+      
+├── commit_06_undo_attempt_function/
+│   └── app.py
+│questions = [
+    ("What is Python?", ["Programming Language","Animal","Car"], "Programming Language"),
+    ("2 + 2 = ?", ["3","4","5"], "4")
+]
+├── commit_07_questions_added/
+│   └── app.py
+│@app.route("/")
+def home():
+    return "<h1>Mini CBT System</h1>"
+  
+├── commit_08_home_route/
+│   └── app.py
+│@app.route("/test")
+def test():
+    return "Test Page"
+    
+├── commit_09_test_route/
+│   └── app.py
+│@app.route("/test", methods=["GET","POST"])
+def test():
+    if request.method == "POST":
+        return "Submitted"
+        
+├── commit_10_form_submission/
+│   └── app.py
+│score = 0
+for i, q in enumerate(questions):
+    user_answer = request.form.get(f"q{i}")
+    
+├── commit_11_score_calculation/
+│   └── app.py
+│from datetime import datetime
+time = datetime.now()
+
+├── commit_12_timestamp_added/
+│   └── app.py
+│form_html = "<form method='POST'>"
+form_html += "<button type='submit'>Submit</button></form>"
+
+├── commit_13_html_improvements/
+│   └── app.py
+│return "<a href='/'>Back Home</a>"
+
+├── commit_14_navigation_added/
+│   └── app.py
+│# Flask Mini CBT Application
+
+├── commit_15_code_readability/
+│   └── app.py
+│# Question class handles CBT questions
+
+├── commit_16_documentation_comments/
+│   └── app.py
+│questions.append(
+("Capital of France?",["Paris","London","Berlin"],"Paris")
+)
+
+├── commit_17_question_update/
+│   └── app.py
+│@app.route("/result")
+def result():
+    return "Result Page"
+    
+├── commit_18_route_improvement/
+│   └── app.py
+│print("Application running...")
+
+├── commit_19_testing_debugging/
+│   └── app.py
+│# Final adjustments before submission
+
+└── commit_20_final_version/
+    └── app.py
+    from flask import Flask, request
+from datetime import datetime
+
+# -------------------------
+# Flask App Initialization
+# -------------------------
+app = Flask(__name__)
+
+
+# -------------------------
+# Question Class (OOP)
+# -------------------------
+class Question:
+    """
+    Represents a CBT question with options and correct answer
+    """
+    def __init__(self, question, options, answer):
+        self.question = question
+        self.options = options
+        self.answer = answer
+        self.created_at = datetime.now()
+
+    def check_answer(self, user_answer):
+        """Check if the user's answer is correct"""
+        return user_answer == self.answer
+
+
+# -------------------------
+# Stack Data Structure
+# -------------------------
+attempt_stack = []
+
+def add_attempt(score):
+    """Push a score into the stack"""
+    attempt_stack.append(score)
+
+def undo_last_attempt():
+    """Remove the most recent attempt"""
+    if attempt_stack:
+        return attempt_stack.pop()
+
+
+# -------------------------
+# CBT Questions
+# -------------------------
+questions = [
+    Question(
+        "What is Python?",
+        ["Programming Language", "Animal", "Car"],
+        "Programming Language"
+    ),
+
+    Question(
+        "2 + 2 = ?",
+        ["3", "4", "5"],
+        "4"
+    )
+]
+
+
+# -------------------------
+# Home Page
+# -------------------------
+@app.route("/")
+def home():
+    return """
+    <h1>Mini CBT System</h1>
+    <p>Welcome to the Flask CBT Application</p>
+    <a href='/test'>Start Test</a>
+    """
+
+
+# -------------------------
+# Test Page
+# -------------------------
+@app.route("/test", methods=["GET", "POST"])
+def test():
+
+    if request.method == "POST":
+
+        score = 0
+
+        # Check answers
+        for i, q in enumerate(questions):
+            user_answer = request.form.get(f"q{i}")
+
+            if q.check_answer(user_answer):
+                score += 1
+
+        # Save attempt in stack
+        add_attempt(score)
+
+        submission_time = datetime.now()
+
+        return f"""
+        <h2>Test Result</h2>
+        <p>Your Score: {score} / {len(questions)}</p>
+        <p>Submitted at: {submission_time}</p>
+        <br>
+        <a href='/'>Back Home</a>
+        """
+
+    # Display questions
+    form_html = "<h2>Answer the Questions</h2><form method='POST'>"
+
+    for i, q in enumerate(questions):
+        form_html += f"<p>{q.question}</p>"
+
+        for option in q.options:
+            form_html += f"""
+            <input type='radio' name='q{i}' value='{option}'>
+            {option}<br>
+            """
+
+    form_html += "<br><button type='submit'>Submit Test</button></form>"
+
+    return form_html
+
+
+# -------------------------
+# Run Application
+# -------------------------
+if __name__ == "__main__":
+    app.run(debug=True)
